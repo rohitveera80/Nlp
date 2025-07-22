@@ -1,88 +1,86 @@
- <style>
-        /* Custom CSS for 3D effects, animations, and typography */
-        html {
-            scroll-behavior: smooth;
-        }
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #0f172a; /* Slate 900 - Deep Navy Blue */
-            color: #cbd5e1; /* Slate 300 - Light gray text */
-            overflow-x: hidden;
-        }
+/* Custom CSS for 3D effects, animations, and typography */
+html {
+    scroll-behavior: smooth;
+}
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #0f172a; /* Slate 900 - Deep Navy Blue */
+    color: #cbd5e1; /* Slate 300 - Light gray text */
+    overflow-x: hidden;
+}
 
-        /* 3D Card Effect */
-        .card-3d {
-            transform-style: preserve-3d;
-            perspective: 1000px;
-            transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.3s ease-out;
-            background-color: #1e293b; /* Slate 800 */
-            border: 1px solid #334155; /* Slate 700 */
-        }
-        .card-3d:hover {
-            transform: rotateY(10deg) rotateX(5deg) scale(1.05);
-            box-shadow: 0 25px 50px -12px rgba(0, 255, 255, 0.15);
-        }
+/* 3D Card Effect */
+.card-3d {
+    transform-style: preserve-3d;
+    perspective: 1000px;
+    transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.3s ease-out;
+    background-color: #1e293b; /* Slate 800 */
+    border: 1px solid #334155; /* Slate 700 */
+}
+.card-3d:hover {
+    transform: rotateY(10deg) rotateX(5deg) scale(1.05);
+    box-shadow: 0 25px 50px -12px rgba(0, 255, 255, 0.15);
+}
 
-        /* Scroll-triggered Animations */
-        .scroll-fade-in {
-            opacity: 0;
-            transform: translateY(50px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-        }
-        .scroll-fade-in.is-visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
+/* Scroll-triggered Animations */
+.scroll-fade-in {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+.scroll-fade-in.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
 
-        /* Hero Section 3D Background */
-        .hero-section {
-            position: relative;
-            overflow: hidden;
-        }
-        #hero-3d-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-        }
+/* Hero Section 3D Background */
+.hero-section {
+    position: relative;
+    overflow: hidden;
+}
+#hero-3d-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
 
-        /* Timeline Styling */
-        .timeline-item {
-            position: relative;
-            padding-left: 3rem;
-            padding-bottom: 2.5rem;
-            border-left: 2px solid #334155; /* Slate 700 */
-        }
-        .timeline-item:last-child {
-            border-left-color: transparent;
-        }
-        .timeline-dot {
-            position: absolute;
-            left: -0.625rem;
-            top: 0.25rem;
-            width: 1.25rem;
-            height: 1.25rem;
-            background-color: #06b6d4; /* Cyan 500 */
-            border-radius: 9999px;
-            border: 3px solid #0f172a;
-            transform: scale(0);
-            transition: transform 0.5s ease-out;
-        }
-        .timeline-item.is-visible .timeline-dot {
-            transform: scale(1);
-        }
-        
-        /* Custom heading styles */
-        .section-heading {
-            color: #f8fafc; /* Slate 50 */
-            text-shadow: 0 0 15px rgba(6, 182, 212, 0.3);
-        }
-        .accent-text {
-            color: #06b6d4; /* Cyan 500 */
-        }
-        .accent-text-magenta {
-            color: #d946ef; /* Fuchsia 500 */
-        }
-    </style>
+/* Timeline Styling */
+.timeline-item {
+    position: relative;
+    padding-left: 3rem;
+    padding-bottom: 2.5rem;
+    border-left: 2px solid #334155; /* Slate 700 */
+}
+.timeline-item:last-child {
+    border-left-color: transparent;
+}
+.timeline-dot {
+    position: absolute;
+    left: -0.625rem;
+    top: 0.25rem;
+    width: 1.25rem;
+    height: 1.25rem;
+    background-color: #06b6d4; /* Cyan 500 */
+    border-radius: 9999px;
+    border: 3px solid #0f172a;
+    transform: scale(0);
+    transition: transform 0.5s ease-out;
+}
+.timeline-item.is-visible .timeline-dot {
+    transform: scale(1);
+}
+
+/* Custom heading styles */
+.section-heading {
+    color: #f8fafc; /* Slate 50 */
+    text-shadow: 0 0 15px rgba(6, 182, 212, 0.3);
+}
+.accent-text {
+    color: #06b6d4; /* Cyan 500 */
+}
+.accent-text-magenta {
+    color: #d946ef; /* Fuchsia 500 */
+}
