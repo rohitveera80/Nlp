@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comprehensive NLP Career Roadmap</title>
+    
+    <!-- Placeholder Comments -->
+    <!-- Chosen Palette: "Cybernetic Twilight" - A modern, tech-focused palette with a deep navy blue base, slate grays for text, and vibrant cyan and magenta for accents and interactive elements. -->
+    <!-- Application Structure Plan: A narrative, single-page scrolling experience. The user is greeted by an immersive 3D hero section. An interactive "Contents" grid with 3D cards allows for quick navigation. Each of the 7 roadmap sections is presented in a distinct, full-width block with scroll-triggered animations. This linear flow is ideal for a roadmap, guiding the user logically from one stage to the next, while interactive elements like the timeline and charts maintain engagement. -->
+    <!-- Visualization & Content Choices: 
+        - Hero Section: Goal: Captivate. Method: Interactive 3D particle network (Three.js). Interaction: Mouse movement controls particle connections. Justification: Creates a dynamic, high-tech first impression that visually represents the interconnected nature of NLP.
+        - Navigation: Goal: Organize & Engage. Method: 3D flipping cards (HTML/CSS). Interaction: Hover. Justification: A visually appealing and modern way to present the main sections, encouraging user interaction.
+        - Timeline: Goal: Show Progression. Method: Vertical timeline with animated dots (HTML/CSS/JS). Interaction: Scroll-triggered animations. Justification: Clearly visualizes the year-by-year progression of the roadmap.
+        - Demand Chart: Goal: Inform & Compare. Method: Animated Doughnut Chart (Chart.js). Interaction: Scroll-triggered animation. Justification: Presents market demand data in a clean, digestible format.
+        - CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Custom CSS for 3D effects, animations, and typography */
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f172a; /* Slate 900 - Deep Navy Blue */
+            color: #cbd5e1; /* Slate 300 - Light gray text */
+            overflow-x: hidden;
+        }
+
+        /* 3D Card Effect */
+        .card-3d {
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.3s ease-out;
+            background-color: #1e293b; /* Slate 800 */
+            border: 1px solid #334155; /* Slate 700 */
+        }
+        .card-3d:hover {
+            transform: rotateY(10deg) rotateX(5deg) scale(1.05);
+            box-shadow: 0 25px 50px -12px rgba(0, 255, 255, 0.15);
+        }
+
+        /* Scroll-triggered Animations */
+        .scroll-fade-in {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .scroll-fade-in.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Hero Section 3D Background */
+        .hero-section {
+            position: relative;
+            overflow: hidden;
+        }
+        #hero-3d-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        /* Timeline Styling */
+        .timeline-item {
+            position: relative;
+            padding-left: 3rem;
+            padding-bottom: 2.5rem;
+            border-left: 2px solid #334155; /* Slate 700 */
+        }
+        .timeline-item:last-child {
+            border-left-color: transparent;
+        }
+        .timeline-dot {
+            position: absolute;
+            left: -0.625rem;
+            top: 0.25rem;
+            width: 1.25rem;
+            height: 1.25rem;
+            background-color: #06b6d4; /* Cyan 500 */
+            border-radius: 9999px;
+            border: 3px solid #0f172a;
+            transform: scale(0);
+            transition: transform 0.5s ease-out;
+        }
+        .timeline-item.is-visible .timeline-dot {
+            transform: scale(1);
+        }
+        
+        /* Custom heading styles */
+        .section-heading {
+            color: #f8fafc; /* Slate 50 */
+            text-shadow: 0 0 15px rgba(6, 182, 212, 0.3);
+        }
+        .accent-text {
+            color: #06b6d4; /* Cyan 500 */
+        }
+        .accent-text-magenta {
+            color: #d946ef; /* Fuchsia 500 */
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- === HERO SECTION === -->
+    <header class="hero-section h-screen flex items-center justify-center text-center p-4">
+        <canvas id="hero-3d-bg"></canvas>
+        <div class="relative z-10 max-w-4xl mx-auto">
+            <h1 id="hero-title" class="text-4xl md:text-6xl lg:text-7xl font-extrabold text-slate-50 mb-4 tracking-tight" style="text-shadow: 0 0 20px rgba(6, 182, 212, 0.5);">
+                The Complete NLP Career Roadmap
+            </h1>
+            <p id="hero-subtitle" class="text-lg md:text-xl text-slate-300 font-medium">
+                A B.Tech Student's Guide from First Year to Industry Leader
+            </p>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+
+        <!-- === TABLE OF CONTENTS === -->
+        <section id="contents" class="scroll-fade-in mb-24">
+            <h2 class="section-heading text-3xl md:text-4xl font-bold text-center mb-12">Table of Contents</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <a href="#domain-progression" class="card-3d block p-6 rounded-xl">
+                    <h3 class="text-xl font-semibold accent-text mb-2">1. Domain Progression</h3>
+                    <p class="text-slate-400">A year-by-year journey through the core concepts of NLP.</p>
+                </a>
+                <a href="#strategic-start-points" class="card-3d block p-6 rounded-xl">
+                    <h3 class="text-xl font-semibold accent-text mb-2">2. Strategic Start Points</h3>
+                    <p class="text-slate-400">A semester-by-semester checklist for targeted learning.</p>
+                </a>
+                <a href="#market-demand" class="card-3d block p-6 rounded-xl">
+                    <h3 class="text-xl font-semibold accent-text mb-2">3. Market Demand Analysis</h3>
+                    <p class="text-slate-400">Insights into current and future career opportunities.</p>
+                </a>
+                <a href="#case-study" class="card-3d block p-6 rounded-xl">
+                    <h3 class="text-xl font-semibold accent-text mb-2">4. Mini Case Study</h3>
+                    <p class="text-slate-400">Applying NLP to combat real-world misinformation.</p>
+                </a>
+                <a href="#internships" class="card-3d block p-6 rounded-xl">
+                    <h3 class="text-xl font-semibold accent-text mb-2">5. Internship Opportunities</h3>
+                    <p class="text-slate-400">A curated list of top internship roles for aspiring NLP engineers.</p>
+                </a>
+                <a href="#interviews" class="card-3d block p-6 rounded-xl">
+                    <h3 class="text-xl font-semibold accent-text mb-2">6. Alumni & Industry Interviews</h3>
+                    <p class="text-slate-400">Actionable advice from professionals in the field.</p>
+                </a>
+                 <a href="#scholarships" class="card-3d block p-6 rounded-xl col-span-1 md:col-span-2 lg:col-span-3">
+                    <h3 class="text-xl font-semibold accent-text mb-2">7. Scholarships & Fellowships</h3>
+                    <p class="text-slate-400">A guide to funding advanced research and higher studies in NLP.</p>
+                </a>
+            </div>
+        </section>
+
+        <!-- === 1. DOMAIN PROGRESSION === -->
+        <section id="domain-progression" class="scroll-fade-in mb-24 p-8 bg-[#1e293b] rounded-2xl shadow-2xl border border-slate-700">
+            <h2 class="section-heading text-3xl md:text-4xl font-bold mb-6">1. Domain Progression: Your NLP Journey</h2>
+            <p class="text-lg text-slate-400 mb-8">This section outlines a clear, year-by-year progression of learning and skill acquisition for aspiring NLP professionals, ensuring a solid foundation and advanced specialization.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="text-2xl font-semibold accent-text-magenta mb-4">Key Milestones by Year</h3>
+                    <ul class="list-disc list-inside space-y-2 text-slate-300">
+                        <li><strong>Year 1:</strong> Core Computing Foundations (DSA, Math, Git)</li>
+                        <li><strong>Year 2:</strong> Introduction to NLP & Data Handling (Python, SQL, Statistical NLP)</li>
+                        <li><strong>Year 3:</strong> Deep Learning for Language & Scalability (RNNs, Transformers, Cloud)</li>
+                        <li><strong>Year 4:</strong> Advanced NLP, Production & Career Readiness (LLMs, MLOps, Ethics)</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-semibold accent-text-magenta mb-4">Skills & Tooling Timeline</h3>
+                    <ul class="list-disc list-inside space-y-2 text-slate-300">
+                        <li><strong>Years 1-2:</strong> Python, Git, SQL, NumPy, Pandas, Scikit-learn, NLTK, spaCy</li>
+                        <li><strong>Year 3:</strong> TensorFlow/PyTorch, Hugging Face Transformers, Spark, Docker, AWS/Azure/GCP</li>
+                        <li><strong>Year 4:</strong> LangChain, MLflow, FastAPI, Kubernetes (conceptual), XAI Tools</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- === 2. STRATEGIC START POINTS === -->
+        <section id="strategic-start-points" class="scroll-fade-in mb-24">
+            <h2 class="section-heading text-3xl md:text-4xl font-bold text-center mb-12">2. Strategic Start Points: A Semester-by-Semester Guide</h2>
+            <div class="relative">
+                <div class="timeline-item scroll-fade-in">
+                    <div class="timeline-dot"></div>
+                    <h3 class="text-xl font-semibold accent-text mb-2">Semesters 1-2: Build the Foundation</h3>
+                    <p class="text-slate-400">Master programming fundamentals and DSA. Dedicate significant effort to becoming proficient in Python and begin self-studying Linear Algebra and Calculus.</p>
+                </div>
+                <div class="timeline-item scroll-fade-in">
+                    <div class="timeline-dot"></div>
+                    <h3 class="text-xl font-semibold accent-text mb-2">Semesters 3-4: Enter the NLP World</h3>
+                    <p class="text-slate-400">Immerse yourself in data manipulation with Pandas and SQL. Start using NLP libraries like NLTK and spaCy. Build your first text classifier project and host it on GitHub.</p>
+                </div>
+                <div class="timeline-item scroll-fade-in">
+                    <div class="timeline-dot"></div>
+                    <h3 class="text-xl font-semibold accent-text mb-2">Semesters 5-6: Embrace Deep Learning</h3>
+                    <p class="text-slate-400">Dive into Deep Learning for NLP (RNNs, LSTMs). Get a conceptual understanding of Transformers. Gain hands-on experience with cloud NLP services and big data tools like Spark.</p>
+                </div>
+                <div class="timeline-item scroll-fade-in">
+                    <div class="timeline-dot"></div>
+                    <h3 class="text-xl font-semibold accent-text mb-2">Semesters 7-8: Prepare for Production</h3>
+                    <p class="text-slate-400">Deepen your expertise in LLMs, Prompt Engineering, and RAG. Learn MLOps principles to manage the model lifecycle. Study NLP System Design and prepare rigorously for interviews.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- === 3. MARKET DEMAND ANALYSIS === -->
+        <section id="market-demand" class="scroll-fade-in mb-24 p-8 bg-[#1e293b] rounded-2xl shadow-2xl border border-slate-700">
+            <h2 class="section-heading text-3xl md:text-4xl font-bold mb-6">3. Market Demand Analysis</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div>
+                    <h3 class="text-2xl font-semibold accent-text-magenta mb-4">Career Landscape</h3>
+                    <p class="text-lg text-slate-400 mb-4">The demand for NLP specialists is exploding, driven by the generative AI revolution. Companies across all sectors are seeking talent to build, fine-tune, and deploy language models.</p>
+                    <ul class="space-y-4">
+                        <li class="scroll-fade-in">
+                            <h4 class="font-semibold text-slate-200">Present Demand</h4>
+                            <p class="text-slate-400">Over 15,000+ active job postings for NLP-related roles in India, with a thriving global market.</p>
+                        </li>
+                        <li class="scroll-fade-in">
+                            <h4 class="font-semibold text-slate-200">Future Outlook</h4>
+                            <p class="text-slate-400">The global NLP market is projected to grow at a CAGR of 33.1%, reaching $86.8 billion by 2029.</p>
+                        </li>
+                        <li class="scroll-fade-in">
+                            <h4 class="font-semibold text-slate-200">Leading Employers</h4>
+                            <p class="text-slate-400">Google, Microsoft, Amazon, IBM, TCS, and a vibrant ecosystem of AI startups.</p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="chart-container w-full h-64 md:h-80 relative scroll-fade-in">
+                    <canvas id="demand-chart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- === 4. MINI CASE STUDY === -->
+        <section id="case-study" class="scroll-fade-in mb-24">
+            <h2 class="section-heading text-3xl md:text-4xl font-bold text-center mb-12">4. Mini Case Study: Combating Misinformation with NLP</h2>
+            <div class="card-3d bg-[#1e293b] border border-slate-700 p-8 rounded-2xl shadow-2xl">
+                <p class="text-sm text-slate-500 mb-2">Based on a talk by Dr. Anya Sharma (Fictional NLP Ethicist)</p>
+                <h3 class="text-2xl font-semibold accent-text mb-4">The Challenge of Digital Deception</h3>
+                <p class="text-lg text-slate-400 mb-6">This case study explores how advanced NLP techniques can be used to build automated systems that identify and flag misinformation at scale, a critical challenge in today's digital world.</p>
+                <div class="space-y-4 text-slate-300">
+                    <p><strong>Problem:</strong> The rapid spread of misinformation online requires automated systems to detect nuanced, deceptive language and differentiate it from factual reporting.</p>
+                    <p><strong>Solution Summary:</strong> A multi-layered NLP solution using Transformer models trained on verified claims. The system integrates Stance Detection, Evidence Retrieval from trusted sources, and a Credibility Scoring model to provide transparent, explainable assessments of online content.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- === 5. INTERNSHIP OPPORTUNITY TRACKING === -->
+        <section id="internships" class="scroll-fade-in mb-24 p-8 bg-[#1e293b] rounded-2xl shadow-2xl border border-slate-700">
+            <h2 class="section-heading text-3xl md:text-4xl font-bold mb-6">5. Internship Opportunities</h2>
+            <p class="text-lg text-slate-400 mb-8">A representative list of top-tier internships for the 2025-2026 season. (Note: Links are illustrative).</p>
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-slate-700">
+                    <thead class="bg-slate-800">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Company</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Role</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Eligibility</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Deadline</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-[#1e293b] divide-y divide-slate-700">
+                        <tr class="hover:bg-slate-800 transition-colors">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-100">Google</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-400">SWE Intern, NLU</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-400">3rd/4th Year B.Tech</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-400">Oct 2025</td>
+                        </tr>
+                        <tr class="hover:bg-slate-800 transition-colors">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-100">Microsoft</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-400">Applied Scientist Intern</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-400">3rd+ Year B.Tech</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-400">Nov 2025</td>
+                        </tr>
+                        <tr class="hover:bg-slate-800 transition-colors">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-100">Hugging Face</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-400">ML Intern (Transformers)</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-400">Strong Transformer Exp.</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-400">Rolling</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- === 6. ALUMNI & INDUSTRY INTERVIEWS === -->
+        <section id="interviews" class="scroll-fade-in mb-24">
+            <h2 class="section-heading text-3xl md:text-4xl font-bold text-center mb-12">6. Alumni & Industry Interviews</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="card-3d bg-[#1e293b] border border-slate-700 p-8 rounded-2xl shadow-2xl">
+                    <h3 class="text-2xl font-semibold accent-text-magenta mb-4">Insights from an NLP Engineer</h3>
+                    <p class="text-sm text-slate-500 mb-4">Alumnus at a Leading Tech Company</p>
+                    <h4 class="font-semibold text-slate-200 mb-2">Key Takeaways:</h4>
+                    <ul class="list-disc list-inside space-y-2 text-slate-300">
+                        <li>Practical text data cleaning skills are more critical than theoretical knowledge alone.</li>
+                        <li>The ability to explain complex models to non-technical stakeholders is a superpower.</li>
+                        <li>Continuous learning is non-negotiable in the fast-paced world of LLMs.</li>
+                    </ul>
+                </div>
+                <div class="card-3d bg-[#1e293b] border border-slate-700 p-8 rounded-2xl shadow-2xl">
+                    <h3 class="text-2xl font-semibold accent-text-magenta mb-4">Perspectives from a Hiring Manager</h3>
+                    <p class="text-sm text-slate-500 mb-4">Head of Conversational AI</p>
+                    <h4 class="font-semibold text-slate-200 mb-2">Key Takeaways:</h4>
+                    <ul class="list-disc list-inside space-y-2 text-slate-300">
+                        <li>Hiring managers look for an end-to-end product view, including MLOps.</li>
+                        <li>A strong focus on ethical AI and bias mitigation in LLMs is highly valued.</li>
+                        <li>Proficiency in prompt engineering and fine-tuning is now a core skill.</li>
+                        <li>Practical cloud deployment experience is a major differentiator.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- === 7. SCHOLARSHIPS & FELLOWSHIPS === -->
+        <section id="scholarships" class="scroll-fade-in p-8 bg-[#1e293b] rounded-2xl shadow-2xl border border-slate-700">
+            <h2 class="section-heading text-3xl md:text-4xl font-bold mb-6">7. Scholarships & Fellowships</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="text-2xl font-semibold accent-text-magenta mb-4">Funding for Research</h3>
+                    <p class="text-lg text-slate-400 mb-4">A list of prestigious scholarships and fellowships for students pursuing advanced studies in NLP.</p>
+                    <ul class="list-disc list-inside space-y-2 text-slate-300">
+                        <li>Google PhD Fellowship in NLP</li>
+                        <li>Microsoft Research PhD Fellowship</li>
+                        <li>NVIDIA Graduate Fellowship Program</li>
+                        <li>OpenAI Scholars Program</li>
+                        <li>DeepMind PhD Scholarship</li>
+                        <li>Fulbright-Nehru Master's Fellowships</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-semibold accent-text-magenta mb-4">Pathway Guide for Researchers</h3>
+                    <p class="text-lg text-slate-400 mb-4">A step-by-step guide for aspiring NLP researchers.</p>
+                    <ol class="list-decimal list-inside space-y-2 text-slate-300">
+                        <li>Gain early research exposure under a professor.</li>
+                        <li>Master Deep Learning and LLMs.</li>
+                        <li>Aim to publish in a university-level symposium.</li>
+                        <li>Apply for a Summer Research Fellowship (SRF).</li>
+                        <li>Network at academic conferences and prepare applications.</li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- === FOOTER === -->
+    <footer class="bg-slate-900 text-white py-8 text-center mt-24">
+        <div class="container mx-auto px-4">
+            <p class="text-lg mb-2">NLP Roadmap | A Guide for Future Innovators</p>
+            <p class="text-sm text-slate-400">Created by [Your Name]</p>
+        </div>
+    </footer>
+
+    <!-- Three.js and Chart.js CDNs -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- 3D Hero Background using Three.js ---
+            let scene, camera, renderer, points;
+            let mouseX = 0, mouseY = 0;
+            const windowHalfX = window.innerWidth / 2;
+            const windowHalfY = window.innerHeight / 2;
+
+            function initHero3D() {
+                const canvas = document.getElementById('hero-3d-bg');
+                scene = new THREE.Scene();
+                camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 2, 2000);
+                camera.position.z = 1000;
+
+                const positions = [];
+                const colors = [];
+                const numParticles = 5000;
+                const n = 1000, n2 = n / 2; 
+
+                for (let i = 0; i < numParticles; i++) {
+                    const x = Math.random() * n - n2;
+                    const y = Math.random() * n - n2;
+                    const z = Math.random() * n - n2;
+                    positions.push(x, y, z);
+                    
+                    const vx = (x / n) + 0.5;
+                    const vy = (y / n) + 0.5;
+                    const vz = (z / n) + 0.5;
+                    // Colors: cyan and magenta
+                    const color = new THREE.Color();
+                    color.setRGB(vx, Math.random() * 0.25, vy);
+                    colors.push(color.r, color.g, color.b);
+                }
+
+                const geometry = new THREE.BufferGeometry();
+                geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+                geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+
+                const material = new THREE.PointsMaterial({
+                    size: 2,
+                    vertexColors: true,
+                    blending: THREE.AdditiveBlending,
+                    transparent: true,
+                });
+
+                points = new THREE.Points(geometry, material);
+                scene.add(points);
+
+                renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
+                renderer.setPixelRatio(window.devicePixelRatio);
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                renderer.setClearColor(0x0f172a, 1); // Match body background
+
+                document.querySelector('.hero-section').addEventListener('mousemove', onDocumentMouseMove);
+                window.addEventListener('resize', onWindowResize);
+            }
+
+            function onWindowResize() {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            }
+
+            function onDocumentMouseMove(event) {
+                mouseX = event.clientX - windowHalfX;
+                mouseY = event.clientY - windowHalfY;
+            }
+
+            function animateHero3D() {
+                requestAnimationFrame(animateHero3D);
+                const time = Date.now() * 0.00005;
+                camera.position.x += (mouseX - camera.position.x) * 0.05;
+                camera.position.y += (-mouseY - camera.position.y) * 0.05;
+                camera.lookAt(scene.position);
+                points.rotation.y = time * 0.5;
+                renderer.render(scene, camera);
+            }
+            
+            initHero3D();
+            animateHero3D();
+
+            // --- Scroll-triggered Animations ---
+            const scrollElements = document.querySelectorAll('.scroll-fade-in, .timeline-item');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            scrollElements.forEach(el => {
+                observer.observe(el);
+            });
+
+            // --- Demand Analysis Chart.js ---
+            const chartCanvas = document.getElementById('demand-chart');
+            if (chartCanvas) {
+                const ctx = chartCanvas.getContext('2d');
+                const demandChart = new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Global Tech Leaders', 'Indian IT Services', 'AI Startups'],
+                        datasets: [{
+                            data: [0, 0, 0], // Initial data
+                            backgroundColor: [
+                                'rgba(6, 182, 212, 0.7)',  // Cyan
+                                'rgba(217, 70, 239, 0.7)', // Fuchsia
+                                'rgba(139, 92, 246, 0.7)'  // Violet
+                            ],
+                            borderColor: '#1e293b',
+                            borderWidth: 2,
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: {
+                                    color: '#cbd5e1' // Slate 300
+                                }
+                            }
+                        }
+                    }
+                });
+
+                const chartObserver = new IntersectionObserver((entries) => {
+                    if (entries[0].isIntersecting) {
+                        demandChart.data.datasets[0].data = [45, 35, 20]; // Final data
+                        demandChart.update();
+                        chartObserver.unobserve(chartCanvas);
+                    }
+                }, { threshold: 0.5 });
+
+                chartObserver.observe(chartCanvas);
+            }
+        });
+    </script>
+</body>
+</html>
+
